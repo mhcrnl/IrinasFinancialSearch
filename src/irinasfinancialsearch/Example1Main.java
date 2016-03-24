@@ -9,6 +9,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.jsoup.select.Elements;
+import java.io.IOException;
 
 /**
  * Created by mertcaliskan
@@ -26,11 +28,13 @@ public class Example1Main {
             "</html>";
 
 
-    public static void main(String... args) {
-        Document document = Jsoup.parse(htmlText);
-        Elements allElements = document.getAllElements();
+    public static void main(String... args) throws IOException {
+        Document document = Jsoup.connect
+        ("http://www.evz.ro/tag/RSS")
+                .timeout(0).get();
+        Elements allElements = document.select("a [href* =#]");
         for (Element element : allElements) {
-            System.out.println(element.nodeName() + " " + element.ownText());
+            System.out.println(element.ownText());
         }
     }
 }

@@ -5,6 +5,12 @@
  */
 package irinasfinancialsearch;
 
+import static irinasfinancialsearch.JsoupTest02.HowTDIJ;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,6 +28,10 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
  *
@@ -84,7 +94,106 @@ public class IrinasFinancialSearch extends Application {
         in.setFont(Font.font("Arriel", FontWeight.BOLD, 14));
         vbox.getChildren().add(in);
         
-        Button btJFS = new Button("Journal of Fin Stab.");
+        Button how = new Button("JournalOfF.S.");
+        how.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                ta.setText(JsoupTest03.JFS("http://rss.sciencedirect.com/publication/science/15723089"));
+                //throw new UnsupportedOperationException("Not supported yet.");
+                //To change body of generated methods, choose Tools | Templates.
+//                try {
+//                    Document document = Jsoup.connect("http://howtodoinjava.com").get();
+//                    Elements links = document.select("a[href]");
+//                    ta.appendText(document.title());
+//                    Element sa = document.getElementById("title");
+//                    
+//                    for (Element link : links){
+//                        System.out.println("link : "+link.attr("href"));
+//                        System.out.println("text : "+link.text());
+//                        String asd = link.text();
+//                        
+//                        //while(link.text() != null){
+//                           
+//                        
+//                        
+//                       //}
+//                    }
+//                    
+//                    
+//                    ta.setText(document.title());
+//                    System.out.println(document.title());
+//                }catch (IOException e){
+//                    e.printStackTrace();
+//                }
+            }
+        
+        });
+        vbox.getChildren().add(how);
+        
+        Button scienceD = new Button("ScienceDaily");
+        scienceD.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                ta.setText(ScienceDaily.
+                        scienceDaily("https://rss.sciencedaily.com/all.xml"));
+            }
+            
+            
+        });
+        vbox.getChildren().add(scienceD);
+        
+        Button evzRead = new Button("Evenimentul");
+        evzRead.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                //throw new UnsupportedOperationException("Not supported yet.");
+                ta.setText(JsoupTest03.JFS("http://www.evz.ro/rss.xml"));
+                //To change body of generated methods, choose Tools | Templates.
+            }
+            
+        });
+        vbox.getChildren().add(evzRead);
+        
+        Button btLibertatea = new Button("Libertatea");
+        btLibertatea.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                Document doc = null;
+                try {
+                    doc = Jsoup.connect("http://www.evz.ro/rss.xml")
+                            .get();
+                    ta.setText(doc.title());
+                    String s = doc.text();
+                    ta.setText(s);
+                    Elements allElements = doc.select("title");
+                    for(Element element: allElements){
+                    //if(element.tagName().equals("title")){
+                        
+                        List rssCit = element.textNodes();
+                        
+                        ta.setText(rssCit.toString());
+                    //}
+                        System.out.println(element.text());
+                    
+                }
+                } catch (IOException ex) {
+                    Logger.getLogger(IrinasFinancialSearch.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+//                Iterator<Element> it = allElements.iterator();
+//                while(it.hasNext()){
+//                    Element element = it.next();
+//                    ta.setText(element.ownText());
+//                }
+                
+                
+            }
+          
+        });
+        vbox.getChildren().add(btLibertatea);
+        
+        Button btJFS = new Button("RomaniaTV");
         btJFS.setOnAction(new EventHandler<ActionEvent>(){
             @Override 
             public void handle(ActionEvent event){
